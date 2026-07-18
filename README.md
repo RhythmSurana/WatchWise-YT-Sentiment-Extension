@@ -1,119 +1,38 @@
 # End-to-end-Youtube-Sentiment
 
+# 🧠✨ End-to-End Live YouTube Viewer Sentiment MLOps Pipeline
 
-conda create -n youtube python=3.11 -y
+An end-to-end, production-grade MLOps system designed to eliminate tutorial guesswork. Using a custom Chrome Extension, this tool fetches live YouTube comments via the YouTube Data API, routes them through a containerized Flask backend powered by an optimized LightGBM model, and injects a real-time analytics dashboard (pie charts, trend graphs, and word clouds) directly onto the YouTube watch page.
 
-conda activate youtube
+---
 
-pip install -r requirements.txt
+## 🚀 Features & Workflow
+1. **Chrome Extension UI:** Injects an interactive data visualization dashboard natively into the YouTube watch page interface.
+2. **Real-Time Data Ingestion:** Fetches live comment streams dynamically using the YouTube Data API v3.
+3. **Robust Text Engineering:** Balances highly skewed comment datasets using SMOTE and extracts semantic features via TF-IDF Vectorization.
+4. **Centralized MLOps Tracking:** Integrated with an AWS-hosted MLflow server and Amazon S3 for comprehensive tracking of artifacts, hyperparameters, and evaluation metrics.
+5. **Modular DVC Automation:** Managed as a reproducible 5-stage Data Version Control pipeline spanning ingestion to model registration.
+6. **Automated GitOps CI/CD:** Utilizes GitHub Actions to build Docker containers, push them to AWS ECR, and automatically deploy updates to an AWS EC2 instance.
 
+---
 
-## DVC
+## 🛠️ Tech Stack
+* **Frontend:** Chrome Extension API, JavaScript, Data Visualization Libraries
+* **Backend:** Python 3.11, Flask
+* **Machine Learning & MLOps:** LightGBM, Scikit-Learn, SMOTE, NLTK, MLflow, DVC
+* **Cloud & DevOps:** Docker, AWS EC2, AWS ECR, Amazon S3, GitHub Actions
 
-dvc init
+---
 
-dvc repro
+## ⚙️ Project Architecture & Pipeline Stages
 
-dvc dag
+The core engine is driven by a highly modular, 5-stage DVC pipeline managed via `dvc.yaml` and `params.yaml`:
 
+1. **Data Ingestion:** Interacts with the YouTube API to pull raw comment feeds.
+2. **Data Preprocessing:** Cleans, tokenizes, and processes natural language text using NLTK.
+3. **Feature Engineering:** Converts text to numeric representations via TF-IDF and applies SMOTE to balance sentiment classes.
+4. **Model Training:** Optimizes hyperparameters and trains a high-performance LightGBM Classifier.
+5. **Evaluation & Registration:** Evaluates metrics, exports local performance plots, and registers production-ready models to MLflow.
 
-
-## AWS
-
-aws configure
-
-
-
-### Json data demo in postman
-
-http://localhost:5000/predict
-
-```python
-{
-    "comments": ["This video is awsome! I loved a lot", "Very bad explanation. poor video"]
-}
-```
-
-
-
-chrome://extensions
-
-
-## how to get youtube api key from gcp:
-
-https://www.youtube.com/watch?v=i_FdiQMwKiw
-
-
-
-# AWS-CICD-Deployment-with-Github-Actions
-
-## 1. Login to AWS console.
-
-## 2. Create IAM user for deployment
-
-	#with specific access
-
-	1. EC2 access : It is virtual machine
-
-	2. ECR: Elastic Container registry to save your docker image in aws
-
-
-	#Description: About the deployment
-
-	1. Build docker image of the source code
-
-	2. Push your docker image to ECR
-
-	3. Launch Your EC2 
-
-	4. Pull Your image from ECR in EC2
-
-	5. Lauch your docker image in EC2
-
-	#Policy:
-
-	1. AmazonEC2ContainerRegistryFullAccess
-
-	2. AmazonEC2FullAccess
-
-	
-## 3. Create ECR repo to store/save docker image
-    - Save the URI: 315865595366.dkr.ecr.us-east-1.amazonaws.com/youtube
-
-	
-## 4. Create EC2 machine (Ubuntu) 
-
-## 5. Open EC2 and Install docker in EC2 Machine:
-	
-	
-	#optinal
-
-	sudo apt-get update -y
-
-	sudo apt-get upgrade
-	
-	#required
-
-	curl -fsSL https://get.docker.com -o get-docker.sh
-
-	sudo sh get-docker.sh
-
-	sudo usermod -aG docker ubuntu
-
-	newgrp docker
-	
-# 6. Configure EC2 as self-hosted runner:
-    setting>actions>runner>new self hosted runner> choose os> then run command one by one
-
-
-# 7. Setup github secrets:
-
-    AWS_ACCESS_KEY_ID=
-
-    AWS_SECRET_ACCESS_KEY=
-
-    AWS_REGION = us-east-1
-
-    AWS_ECR_LOGIN_URI = demo>>  566373416292.dkr.ecr.ap-south-1.amazonaws.com
-
-    ECR_REPOSITORY_NAME = simple-app
+---
+~ Made By Rhythm 
