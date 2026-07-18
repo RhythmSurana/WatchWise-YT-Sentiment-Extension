@@ -1,6 +1,4 @@
-# End-to-end-Youtube-Sentiment
-
-# 🧠✨ End-to-End Live YouTube Viewer Sentiment MLOps Pipeline
+# End-to-End Live YouTube Viewer Sentiment & MLOps Pipeline ✨
 
 An end-to-end, production-grade MLOps system designed to eliminate tutorial guesswork. Using a custom Chrome Extension, this tool fetches live YouTube comments via the YouTube Data API, routes them through a containerized Flask backend powered by an optimized LightGBM model, and injects a real-time analytics dashboard (pie charts, trend graphs, and word clouds) directly onto the YouTube watch page.
 
